@@ -1,95 +1,216 @@
 'use strict';
 
 var React = require('react-native');
+var Home = require('./views/home').default;
+var Me = require('./views/me');
+var Util = require('./views/util');
+var Service = require('./views/service');
+
 var {
+  Component,
+  Image,
   StyleSheet,
-  TabBarIOS,
   Text,
   View,
+  TabBarIOS,
+  NavigatorIOS,
+  StatusBarIOS,
+  ScrollView,
+  TouchableHighlight,
+  ActivityIndicatorIOS,
+  TextInput,
 } = React;
 
-var base64Icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
+// StatusBarIOS.setBarStyle('light-content');
 
-var TabBarExample = React.createClass({
+var Library = React.createClass ({
   statics: {
-    title: '<TabBarIOS>',
-    description: 'Tab-based navigation.',
+    title: '主页',
+    description: '选项卡'
   },
 
-  displayName: 'TabBarExample',
-
-  getInitialState: function() {
+  getInitialState: function(){
     return {
-      selectedTab: 'redTab',
-      notifCount: 0,
-      presses: 0,
+      selectedTab: 'home',
+      showIndex: {
+        height:0,
+        opacity:0
+      },
+      showLogin: {
+        flex:1,
+        opacity:1
+      },
+      isLoadingShow: false
     };
   },
 
-  _renderContent: function(color: string, pageText: string, num?: number) {
-    return (
-      <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <Text style={styles.tabText}>{pageText}</Text>
-        <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
-      </View>
-    );
+  componentDidMount: function() {
+
   },
 
-  render: function() {
-    return (
-      <TabBarIOS
-        tintColor="white"
-        barTintColor="darkslateblue">
-        <TabBarIOS.Item
-          title="Blue Tab"
-          icon={{uri: base64Icon, scale: 3}}
-          selected={this.state.selectedTab === 'blueTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'blueTab',
-            });
-          }}>
-          {this._renderContent('#414A8C', 'Blue Tab')}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          systemIcon="history"
-          badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
-          selected={this.state.selectedTab === 'redTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'redTab',
-              notifCount: this.state.notifCount + 1,
-            });
-          }}>
-          {this._renderContent('#783E33', 'Red Tab', this.state.notifCount)}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          icon={require('./img/tab_xingren_highlight.png')}
-          title="More"
-          selected={this.state.selectedTab === 'greenTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'greenTab',
-              presses: this.state.presses + 1
-            });
-          }}>
-          {this._renderContent('#21551C', 'Green Tab', this.state.presses)}
-        </TabBarIOS.Item>
-      </TabBarIOS>
-    );
+  _selectTab: function(tabName) {
+    this.setState({
+      selectedTab: tabname
+    });
   },
+
+  _addNavigator: function(component, title) {
+    var data = null;
+    if (title === '我的') {
+      data = this.state.data;
+    }
+    return <NavigatorIOS
+      style={{flex:1}}
+      barTintColor='#007AFF'
+      titleTextColor='#fff'
+      tintColor='#fff'
+      translucent={false}
+      initialRoute={{
+        component: component,
+        title: title,
+        passProps: {
+          data: data
+        }
+      }}
+    />;
+  },
+
+  _getEmail: function(val){
+    var email = val;
+    this.setState({
+      email: email
+    });
+  },
+
+  _getPassword: function(val) {
+    var password = val;
+    this.setState({
+      password: password
+    });
+  },
+
+  _login: function(){
+    var email = this.state.email;
+    var password = this.state.password;
+    var path = Service.host;
+    var that = this;
+
+    that.setState ({
+      showLogin: {
+        height:0,
+        width:0,
+        flex:0,
+      },
+      isLoadingShow: true
+    });
+    AdSupportIOS.getAdvertisingTrackingEnabled(function(){
+      AdSupportIOS.getAdvertisingId(function(deviceId){
+
+      });
+    });
+  },
+
+  render: function(){
+    return(
+      <View style={{flex:1}}>
+        {this.state.isLoadingShow ?
+          <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+            <ActivityIndicatorIOS size="small" color="#268DFF"></ActivityIndicatorIOS>
+          </View>:null
+        }
+
+        {!this.state.isLoadingShow ? 
+          <View style={this.state.showIndex}>
+            <TabBarIOS barTintColor="#FFF">
+              <TabBarIOS.Item 
+                icon={require('./img/tab_xingren_highlight.png')}
+                title="首页"
+                selected={this.state.selectedTab === 'home'}
+                onPress={this._selectTab.bind(this, 'home')}
+                >
+                {this._addNavigator(Home, '主页')}
+              </TabBarIOS.Item>
+
+              <TabBarIOS.Item 
+                icon={require('./img/tab_xingren_highlight.png')}
+                title="我的"
+                selected={this.state.selectedTab === 'me'}
+                onPress={this._selectTab.bind(this, 'me')}
+                >
+                {this._addNavigator(Me, '我的')}
+              </TabBarIOS.Item>
+            </TabBarIOS>
+          </View>:null
+        }
+
+        <ScrollView style={[this.state.showLogin]}>
+          <View style={styles.container}>
+            <View>
+              <Image 
+                style={styles.logo} 
+                source={require('./img/tab_xingren_highlight.png')}
+              />
+            </View>
+
+            <View style={styles.inputRow}>
+               <Text>邮箱</Text><TextInput style={styles.input}
+               placeHolder="请输入邮箱" onChangeText={this._getEmail}/>
+            </View>
+
+            <View style={styles.inputRow}>
+               <Text>密码</Text><TextInput style={styles.input}
+               placeHolder="请输入密码" password={true} onChangeText={this._getPassword}/>
+            </View>
+
+            <View>
+              <TouchableHighlight underlayColor="#fff" style={styles.btn}
+                 onPress={this._login}>
+                 <Text style={{color:'#fff'}}>登录</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </ScrollView>
+
+      </View>
+    );
+  }
 
 });
 
 var styles = StyleSheet.create({
-  tabContent: {
-    flex: 1,
+  container:{
+    marginTop:50,
     alignItems: 'center',
   },
-  tabText: {
-    color: 'white',
-    margin: 50,
+  logo:{
+    width:100,
+    height:100,
+    resizeMode: Image.resizeMode.contain,
   },
+  inputRow:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  input:{
+    marginLeft: 10,
+    width: 220,
+    borderWidth: Util.pixel,
+    height: 35,
+    paddingLeft: 8,
+    borderRadius: 5,
+    borderColor: '#ccc'
+  },
+  btn:{
+    marginTop: 10,
+    width: 80,
+    height: 35,
+    backgroundColor: '#3BC1FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+  }
 });
 
-module.exports = TabBarExample;
+module.exports = Library;
