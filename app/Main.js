@@ -9,14 +9,15 @@ import React, {
 } from 'react-native';
 
 import Home from './views/home';
-import Login from './views/login';
+import Login from './views/login'
 
 export default class Main extends React.Component {
 
   constructor(props) {
         super(props);
-        selectedTab: 'home';
-        this._addNavigator = this._addNavigator.bind(this);
+        this.state = {
+          selectedTab: 'Home'
+        };
     }
 
   select(tabName) {
@@ -37,19 +38,28 @@ export default class Main extends React.Component {
         title: title,
         passProps:{}
       }}
-    />;
+    />
    }
 
   render() {
     return(
-      <TabBarIOS style={styles.flex}>
+      <TabBarIOS selectedTab={this.state.selectedTab}>
         <TabBarIOS.Item
           title='首页'
           icon={require('./img/tab_xingren_highlight.png')}
           onPress={this.select.bind(this, 'home')}
-          selected={this.state === 'home'}
+          selected={this.state.selectedTab === 'home'}
           >
-          {this._addNavigator(Home, '首页')}
+          <Home/>
+        </TabBarIOS.Item>
+
+        <TabBarIOS.Item
+          title='测试'
+          icon={require('./img/tab_xingren_highlight.png')}
+          onPress={this.select.bind(this, 'login')}
+          selected={this.state.selectedTab === 'login'}
+          >
+          <Login/>
         </TabBarIOS.Item>
       </TabBarIOS>
     );

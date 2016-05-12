@@ -11,7 +11,7 @@ import React, {
 
 import Me from '../views/me';
 
-export default class Home extends React.Component {
+class HomeNavBar extends React.Component {
 
   constructor(props) {
         super(props);
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
 
   render() {
     return(
-      <ScrollView>
+      <ScrollView style={styles.flex}>
       <TouchableHighlight
         style={styles.touchHighLight}
         onPress={this.goto.bind(this)}>
@@ -43,6 +43,21 @@ export default class Home extends React.Component {
   }
 }
 
+export default class Home extends React.Component {
+
+  render() {
+    return(
+      <NavigatorIOS
+        style={styles.navcontainer}
+        initialRoute={{
+          title: 'Home',
+          component: HomeNavBar
+        }}
+      />
+    );
+  }
+}
+
 var styles = StyleSheet.create({
 
   flex:{
@@ -62,5 +77,19 @@ var styles = StyleSheet.create({
         backgroundColor: '#434243',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+
+  description:{
+    fontSize:20,
+    backgroundColor:'white'
+  },
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  navcontainer:{
+    flex:1,
+    backgroundColor:'red'
+  }
 });
