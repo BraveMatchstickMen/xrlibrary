@@ -24,7 +24,7 @@ export default class Main extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
-          selectedTab: 'Home',
+          selectedTab: 'home',
           showIndex: {
             height:0,
             opacity:0
