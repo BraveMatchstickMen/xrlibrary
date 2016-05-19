@@ -1,8 +1,8 @@
 'use strict'
 
 var Service = {
-	host: 'http://127.0.0.1:3000',
-	login: 'user/login'
+	host: 'http://api.elza.cn/api/',
+	login: 'chumei/login/'
 };
 
 module.exports = Service;

@@ -1,39 +1,33 @@
-'use strict'
-
 var React = require('react-native');
-var Dimensions = require('Dimensions');
-
-var {
-	PixelRatio
-} = React;
 
 var Util = {
 
-	pixel: 1 / PixelRatio.get(),
+  //post
+  post: function (url, data, callback) {
+    var fetchOptions = {
+      method: 'POST',
+      body: new FormData(data.querySelector('#form'))
+    };
 
-	size: {
-		width: Dimensions.get('window').width,
-		height: Dimensions.get('window').height 
-	},
+    fetch(url, fetchOptions)
+      .then((response) => response.json())
+      .then((responseText) => {
+        callback(JSON.parse(responseText));
+      })
+			.catch((error) => {
+				console.warn(error);
+			});
 
-	post: function (url, data, callback) {
-		var fetchOptions = {
-			method: 'POST',
-			headers : {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
-		};
+  },
 
-		fetch(url, fetchOptions)
-		.then((response) => response.text())
-		.then((responseText) => {
-			callback(JSON.parse(responseText));
-		});
-	},
-
-	key: 'HSHHSGSGGSTWSYWSYUSUWSHWBS-REACT-NATIVE'
+  //get
+  getJSON: function(url, callback){
+    fetch(url)
+      .then((response) => response.text())
+      .then((responseText) => {
+        callback(JSON.parse(responseText));
+      });
+  },
 };
 
 module.exports = Util;

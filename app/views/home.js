@@ -9,13 +9,9 @@ import React, {
   ScrollView
 } from 'react-native';
 
-import Me from '../views/me';
+import Detail from '../views/detail';
 
 class HomeNavBar extends React.Component {
-
-  constructor(props) {
-        super(props);
-    }
 
   render() {
     return(
@@ -33,7 +29,7 @@ class HomeNavBar extends React.Component {
 
   goto() {
     this.props.navigator.push({
-      component: Me,
+      component: Detail,
       title: '详情页面',
       rightButtonTitle: '购物车',
       onRightButtonPress() {
