@@ -84,9 +84,9 @@ class HomeNavBar extends React.Component {
     );
   }
 
-    _renderRow(rowData) {
+    _renderRow = rowData => {
       return (
-        <BookItem onPress={() => this._loadPage(rowData.id)}
+        <BookItem onPress={() =>this._loadPage(rowData.id)}
         coverURL={rowData.image}
         title={rowData.title}
         author={rowData.author[0]}
@@ -103,7 +103,7 @@ class HomeNavBar extends React.Component {
         title: '详情页面',
         rightButtonTitle: '收藏',
         onRightButtonPress() {
-          alert('程序猿哥哥正在连夜赶工中...');
+          alert('测试!');
         }
       });
     }

@@ -1,6 +1,11 @@
-var React = require('react-native');
+
+import React, {
+  ActivityIndicatorIOS,
+} from 'react-native';
 
 var Util = {
+
+  loading: <ActivityIndicatorIOS color="#3E00FF" style={{marginTop:40}}/>,
 
   //post
   post: function (url, data, callback) {
